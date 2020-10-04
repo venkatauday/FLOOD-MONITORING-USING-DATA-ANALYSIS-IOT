@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+fig = plt.figure(figsize=(16,10))
+ax = fig.add_subplot(222)
+dfg = df.groupby(&#39;YEAR&#39;).sum()[&#39;ANNUAL&#39;]
+dfg.plot(kind=&#39;line&#39;, title=&#39;Overall Rainfall in Each Year&#39;, fontsize=20)
+plt.ylabel(&#39;Overall Rainfall (mm)&#39;)
+ax.title.set_fontsize(30)
+ax.xaxis.label.set_fontsize(20)
+ax.yaxis.label.set_fontsize(20)
+print(&#39;Max: &#39; + str(dfg.max()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.max()].index.values[0:]))
+print(&#39;Min: &#39; + str(dfg.min()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.min()].index.values[0:]))
+print(&#39;Mean: &#39; + str(dfg.mean()))
+plt.show()
