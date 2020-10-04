@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+df.info()
+df.dropna(how=&#39;any&#39;, inplace=True)
+subdivs = df[&#39;SUBDIVISION&#39;].unique()
+num_of_subdivs = subdivs.size
+print(&#39;Total # of Subdivs: &#39; + str(num_of_subdivs))
+subdivs
+df.groupby(&#39;SUBDIVISION&#39;).mean().sort_values(by=&#39;ANNUAL&#39;,
+ascending=False)[&#39;ANNUAL&#39;].plot(kind=&#39;bar&#39;, color=&#39;Y&#39;,width=0.9,title=&#39;Subdivision wise Average
+Annual Rainfall&#39;, fontsize=20)
+plt.xticks(rotation = 90)
+plt.xticks(np.linspace(0,35,36,endpoint=True))
+plt.xticks(fontsize=&quot;small&quot;)
+plt.ylabel(&#39;Average Annual Rainfall (mm)&#39;)
+fig = plt.figure(figsize=(8,8))
+print(df.groupby(&#39;SUBDIVISION&#39;).mean().sort_values(by=&#39;ANNUAL&#39;,
+ascending=False)[&#39;ANNUAL&#39;][[0,1,1]])
+print(df.groupby(&#39;SUBDIVISION&#39;).mean().sort_values(by=&#39;ANNUAL&#39;,
+ascending=False)[&#39;ANNUAL&#39;][[33,34,35]])
+plt.show()
+
