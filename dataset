@@ -1,0 +1,95 @@
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+df.info()
+df.dropna(how=&#39;any&#39;, inplace=True)
+subdivs = df[&#39;SUBDIVISION&#39;].unique()
+num_of_subdivs = subdivs.size
+print(&#39;Total # of Subdivs: &#39; + str(num_of_subdivs))
+subdivs
+df.groupby(&#39;SUBDIVISION&#39;).mean().sort_values(by=&#39;ANNUAL&#39;,
+ascending=False)[&#39;ANNUAL&#39;].plot(kind=&#39;bar&#39;, color=&#39;Y&#39;,width=0.9,title=&#39;Subdivision wise Average
+Annual Rainfall&#39;, fontsize=20)
+plt.xticks(rotation = 90)
+plt.xticks(np.linspace(0,35,36,endpoint=True))
+plt.xticks(fontsize=&quot;small&quot;)
+plt.ylabel(&#39;Average Annual Rainfall (mm)&#39;)
+fig = plt.figure(figsize=(8,8))
+print(df.groupby(&#39;SUBDIVISION&#39;).mean().sort_values(by=&#39;ANNUAL&#39;,
+ascending=False)[&#39;ANNUAL&#39;][[0,1,1]])
+print(df.groupby(&#39;SUBDIVISION&#39;).mean().sort_values(by=&#39;ANNUAL&#39;,
+ascending=False)[&#39;ANNUAL&#39;][[33,34,35]])
+plt.show()
+
+2. import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+months = df.columns[2:14]
+fig = plt.figure(figsize=(18,10))
+ax = fig.add_subplot(221)
+df.groupby(&#39;YEAR&#39;).mean()[months].plot.line(title=&#39;Overall Rainfall in Each Month of Year&#39;,
+ax=ax,fontsize=20)
+#plt.xticks(np.linspace(0,35,36,endpoint=True),xlbls)
+plt.xticks( rotation = 90)
+plt.ylabel(&#39;Rainfall (mm)&#39;)
+plt.legend(loc=&#39;Best&#39;, fontsize = &#39;xx-large&#39;)
+ax.title.set_fontsize(30)
+ax.xaxis.label.set_fontsize(20)
+
+ax.yaxis.label.set_fontsize(20)
+plt.show()
+
+3. import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+fig = plt.figure(figsize=(16,10))
+ax = fig.add_subplot(222)
+dfg = df.groupby(&#39;YEAR&#39;).sum()[&#39;ANNUAL&#39;]
+dfg.plot(kind=&#39;line&#39;, title=&#39;Overall Rainfall in Each Year&#39;, fontsize=20)
+plt.ylabel(&#39;Overall Rainfall (mm)&#39;)
+ax.title.set_fontsize(30)
+ax.xaxis.label.set_fontsize(20)
+ax.yaxis.label.set_fontsize(20)
+print(&#39;Max: &#39; + str(dfg.max()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.max()].index.values[0:]))
+print(&#39;Min: &#39; + str(dfg.min()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.min()].index.values[0:]))
+print(&#39;Mean: &#39; + str(dfg.mean()))
+plt.show()
+
+4. import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+months = df.columns[2:14]
+fig = plt.figure(figsize=(18,10))
+ax = fig.add_subplot(111)
+xlbls = df[&#39;SUBDIVISION&#39;].unique()
+xlbls.sort()
+dfg = df.groupby(&#39;SUBDIVISION&#39;).mean()[months]
+dfg.plot.line(title=&#39;Overall Rainfall in Each Month of Year&#39;, ax=ax,fontsize=20)
+plt.xticks(np.linspace(0,35,36,endpoint=True),xlbls)
+plt.xticks( rotation =90 )
+plt.ylabel(&#39;Rainfall (mm)&#39;)
+plt.legend(loc=&#39;Best&#39;, fontsize = &#39;x-large&#39;)
+ax.title.set_fontsize(30)
+ax.xaxis.label.set_fontsize(20)
+ax.yaxis.label.set_fontsize(20)
+dfg = dfg.mean(axis=0)
+print(&#39;Max: &#39; + str(dfg.max()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.max()].index.values[0:]))
+print(&#39;Min: &#39; + str(dfg.min()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.min()].index.values[0:]))
+print(&#39;Mean: &#39; + str(dfg.mean()))
+
+plt.show()
