@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+from subprocess import check_output
+df = pd.read_csv(r&#39;D:\chanflood.csv&#39;)
+months = df.columns[2:14]
+fig = plt.figure(figsize=(18,10))
+ax = fig.add_subplot(111)
+xlbls = df[&#39;SUBDIVISION&#39;].unique()
+xlbls.sort()
+dfg = df.groupby(&#39;SUBDIVISION&#39;).mean()[months]
+dfg.plot.line(title=&#39;Overall Rainfall in Each Month of Year in every state&#39;, ax=ax,fontsize=20)
+plt.xticks(np.linspace(0,35,36,endpoint=True),xlbls)
+plt.xticks( rotation =90 )
+plt.ylabel(&#39;Rainfall (mm)&#39;)
+plt.legend(loc=&#39;Best&#39;, fontsize = &#39;x-large&#39;)
+ax.title.set_fontsize(30)
+ax.xaxis.label.set_fontsize(20)
+ax.yaxis.label.set_fontsize(20)
+dfg = dfg.mean(axis=0)
+print(&#39;Max: &#39; + str(dfg.max()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.max()].index.values[0:]))
+print(&#39;Min: &#39; + str(dfg.min()) + &#39; ocurred in &#39; + str(dfg.loc[dfg == dfg.min()].index.values[0:]))
+print(&#39;Mean: &#39; + str(dfg.mean()))
+
+plt.show()
